@@ -1,12 +1,9 @@
 class Bank
 {
-    constructor(module_names) {
-        this.module_names = module_names;
-        this.modules = {}
+    constructor(modules) {
+        this.modules = modules
         this.state = {}
-        this.module_names.forEach((module_name) => {
-            this.modules[module_name] = new module_name();
-        })
+
     }
 
     callApi(method, parameters = false)
@@ -27,8 +24,12 @@ class Bank
 
     loadStorageState()
     {
-        return this.callApi('storage.get', {key: "bank"}).then((value) => {
-            this.state = JSON.parse(value.text())
+        return this.callApi('storage.get', {key: "bank"}).then((response) => {
+            if (response.status !== 200) {
+                this.state = {}
+            } else {
+                this.state = JSON.parse(response.text())
+            }
             for (const [module_name, module] of Object.entries(this.modules)) {
                 if(!this.state[module_name]) {
                     this.state[module_name] = {}

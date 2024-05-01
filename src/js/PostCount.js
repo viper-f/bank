@@ -34,7 +34,7 @@ class PostCount
     async setMarkup()
     {
         let button_placeholder = document.getElementById('post-count-button-placeholder')
-        if (previous) {
+        if (button_placeholder) {
             button_placeholder.innerHTML = '<a onclick="calculate()" class="tickets-count-btn">Принять</a>';
         }
 

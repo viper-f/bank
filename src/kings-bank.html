@@ -1,3 +1,9 @@
+<html>
+<head>
+   <meta charset="UTF-8" />
+   <link rel="stylesheet" type="text/css" href="kings-bank.css"/>
+</head>
+<body>
 <div id="kings_html_wrapper" class="bank-teme">
    <div class="html_section">
       <h5 class="html_title">Приобрести билет</h5>
@@ -68,29 +74,15 @@
             <div class="bank_list-item-inner">
                <span class="item_desc">Игровой пост до 5 тыс. символов</span><span class="item_cost">2 билетa</span>
             </div>
-            <div class="bank_list-count-form">
-               <label>Текущее значение <input type="text" id="current_score_fld" name="current_score" placeholder="0"></label>
-               <label>Последнее сохраненное <input type="text" id="last_score_fld" name="last_score" placeholder="0"></label>
-               <a onclick="calculate()" class="tickets-count-btn">Принять</a>
-            </div>
-         </li>
-         <li class="bank_list-item">
             <div class="bank_list-item-inner">
                <span class="item_desc">Игровой пост до 10 тыс. символов</span><span class="item_cost">3 билетa</span>
             </div>
-            <div class="bank_list-count-form">
-               <label>Дата последнего подсчета <input type="text" id="post-count-previous" name="current_score"></label>
-               <span id="post-count-button-placeholder"></span>
-            </div>
-         </li>
-         <li class="bank_list-item">
             <div class="bank_list-item-inner">
                <span class="item_desc">Игровой пост свыше 15 тыс. символов</span><span class="item_cost">2 билетa</span>
             </div>
             <div class="bank_list-count-form">
-               <label>Текущее значение <input type="text" id="current_score_fld" name="current_score" placeholder="0"></label>
-               <label>Последнее сохраненное <input type="text" id="last_score_fld" name="last_score" placeholder="0"></label>
-               <a onclick="calculate()" class="tickets-count-btn">Принять</a>
+               <label>Дата последнего подсчета <input type="text" id="post-count-previous" name="current_score"></label>
+               <span id="post-count-button-placeholder"></span>
             </div>
          </li>
          <li class="bank_list-item">
@@ -177,3 +169,15 @@
       </ul>
    </div>
 </div>
+<script src="js/Bank.js"></script>
+<script src="js/Default.js"></script>
+<script src="js/PostCount.js"></script>
+<script>
+   let bank = new Bank({
+      Default: new Default(),
+      PostCount: new PostCount()
+   });
+   bank.setMarkup();
+</script>
+</body>
+</html>

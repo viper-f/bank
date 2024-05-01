@@ -11,6 +11,11 @@ class Default
         return this.tickets;
     }
 
+    async setMarkup()
+    {
+
+    }
+
     addElem(key, elem) {
         this.list[key] = elem
     }
