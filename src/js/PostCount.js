@@ -55,13 +55,16 @@ class PostCount
     {
         bank.modules['Default'].list['PostCount-1'] = {
             text: 'Post 1',
-            price: '1 билет'
+            price_string: '1 билет',
+            price: 1
         }
         bank.modules['Default'].list['PostCount-2'] = {
             text: 'Post 2',
-            price: '2 билета'
+            price_string: '2 билета',
+            price: 2
         }
-        console.log(bank.modules['Default'].list)
+      //  console.log(bank.modules['Default'].list)
+        bank.modules['Default'].setMessageText()
     }
 
     save()
