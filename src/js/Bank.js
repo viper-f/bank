@@ -39,16 +39,6 @@ class Bank
         })
     }
 
-    addItem(key, elem)
-    {
-            this.modules['Default'].addElem(key, elem)
-    }
-
-    removeItem(key)
-    {
-        this.modules['Default'].removeElem(key)
-    }
-
     setMarkup()
     {
         this.loadStorageState().then(() => {
