@@ -35,7 +35,7 @@ class PostCount
     {
         let button_placeholder = document.getElementById('post-count-button-placeholder')
         if (button_placeholder) {
-            button_placeholder.innerHTML = '<a onclick="calculate()" class="tickets-count-btn">Принять</a>';
+            button_placeholder.innerHTML = '<a onclick="bank.modules[\'PostCount\'].calculate()" class="tickets-count-btn">Принять</a>';
         }
 
         let previous = document.getElementById('post-count-previous')
@@ -49,6 +49,19 @@ class PostCount
         if (storage_state['previous_date']) {
             this.previous_date = storage_state['previous_date']
         }
+    }
+
+    calculate()
+    {
+        bank.modules['Default'].list['PostCount-1'] = {
+            text: 'Post 1',
+            price: '1 билет'
+        }
+        bank.modules['Default'].list['PostCount-2'] = {
+            text: 'Post 2',
+            price: '2 билета'
+        }
+        console.log(bank.modules['Default'].list)
     }
 
     save()

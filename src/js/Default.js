@@ -15,7 +15,7 @@ class Default
     {
         let items = document.querySelectorAll('.bank_list-item-inner')
         items.forEach((item, i) => {
-            item.setAttribute("data-inv-number", i)
+            item.setAttribute("data-inv-number", 'Default-'+i)
             item.onclick = function() {bank.modules['Default'].toggleElem(item);}
         })
     }
