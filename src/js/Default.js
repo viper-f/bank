@@ -13,15 +13,25 @@ class Default
 
     async setMarkup()
     {
-
+        let items = document.querySelectorAll('.bank_list-item-inner')
+        items.forEach((item, i) => {
+            item.setAttribute("data-inv-number", i)
+            item.onclick = function() {bank.modules['Default'].toggleElem(item);}
+        })
     }
 
-    addElem(key, elem) {
-        this.list[key] = elem
-    }
+    toggleElem(elem) {
+        elem.classList.toggle('checked')
+        let inv_number = elem.getAttribute("data-inv-number")
+        if (elem.classList.contains('checked')) {
 
-    removeElem(key) {
-        delete(this.list[key])
+            this.list[inv_number] = {
+                text: elem.querySelector('.item_desc').innerText,
+                price: elem.querySelector('.item_cost').innerText
+            }
+        } else {
+            delete(this.list[inv_number])
+        }
     }
 
     load(storage_state)
