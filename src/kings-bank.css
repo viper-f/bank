@@ -9,15 +9,15 @@
   --text2: rgba(38, 13, 34, 0.65);
 }
 
-#kings_html_wrapper a {
+#kings_html_wrapper-positive a {
   color: var(--link);
 }
 
-#kings_html_wrapper a:hover {
+#kings_html_wrapper-positive a:hover {
   color: var(--text1);
 }
 
-#kings_html_wrapper {
+#kings_html_wrapper-positive {
   display: flex;
   gap: 10px;
   align-items: flex-start;

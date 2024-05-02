@@ -3,7 +3,10 @@ class Default
     constructor()
     {
         this.tickets = 0
-        this.list = {}
+        this.list = {
+            positive: {},
+            negative: {}
+        }
         this.message_input = document.getElementById('main-reply')
     }
 
@@ -14,26 +17,37 @@ class Default
 
     async setMarkup()
     {
-        let items = document.querySelectorAll('.bank_list-item-inner')
-        items.forEach((item, i) => {
+        let items_positive = document.querySelectorAll('#kings_html_wrapper-positive .bank_list-item-inner')
+        items_positive.forEach((item, i) => {
             item.setAttribute("data-inv-number", 'Default-'+i)
             item.onclick = function() {bank.modules['Default'].toggleElem(item);}
         })
+
+        let items_negative = document.querySelectorAll('#kings_html_wrapper-negative .bank_list-item-inner')
+        items_negative.forEach((item, i) => {
+            item.setAttribute("data-inv-number", 'Default-'+i)
+            item.onclick = function() {bank.modules['Default'].toggleElem(item, true);}
+        })
     }
 
-    toggleElem(elem)
+    toggleElem(elem, negative = false)
     {
+        let list = this.list.positive;
+        if(negative) {
+            list = this.list.negative;
+        }
+
         elem.classList.toggle('checked')
         let inv_number = elem.getAttribute("data-inv-number")
         if (elem.classList.contains('checked')) {
 
-            this.list[inv_number] = {
+            list[inv_number] = {
                 text: elem.querySelector('.item_desc').innerText,
                 price_string: elem.querySelector('.item_cost').innerText,
                 price: this.extractPrice(elem.querySelector('.item_cost').innerText)
             }
         } else {
-            delete(this.list[inv_number])
+            delete(list[inv_number])
         }
         this.setMessageText()
     }
@@ -47,9 +61,20 @@ class Default
     {
         let message = ''
         let total = 0
-        for (const [index, item] of Object.entries(this.list)) {
-            total += item.price
-            message += item.text + ' - ' + item.price_string + "\n"
+        if(Object.keys(this.list.positive).length) {
+            message += '[b]Добавить: [/b]\n'
+            for (const [index, item] of Object.entries(this.list.positive)) {
+                total += item.price
+                message += item.text + ' - ' + item.price_string + "\n"
+            }
+        }
+
+        if(Object.keys(this.list.negative).length) {
+            message += '[b]Вычесть: [/b]\n'
+            for (const [index, item] of Object.entries(this.list.negative)) {
+                total -= item.price
+                message += item.text + ' - ' + item.price_string + "\n"
+            }
         }
         message += "\n\nИтого: " + this.tickets + " + " + total + " = " + (this.tickets + total)
         return message
