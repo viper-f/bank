@@ -151,6 +151,7 @@ i.html_icons {
 .bank_list-item-inner {
   display: flex;
   align-self: stretch;
+  width: 100%;
 }
 
 .bank_list-item.remark {
