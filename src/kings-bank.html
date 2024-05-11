@@ -33,21 +33,12 @@
             <div class="bank_list-item-inner">
                <span class="item_desc">Каждые 500 сообщений на форуме</span><span class="item_cost">1 билет</span>
             </div>
-            <div class="bank_list-count-form">
-               <label><input type="text" id="current_score_fld" name="current_score" placeholder="0"></label>
-               <label>Последнее сохраненное <input type="text" id="last_score_fld" name="last_score" placeholder="0"></label>
 
-            </div>
          </li>
          <li class="bank_list-item">
             <div class="bank_list-item-inner">
                <span class="item_desc">Реклама нашего форума 
                <span class="bank_tooltip"><i class="html_icons question-icon"></i><em>За каждые 50 рекламных постов</em></span></span><span class="item_cost">1 билет</span>
-            </div>
-            <div class="bank_list-count-form">
-               <label><input type="text" id="current_score_fld" name="current_score" placeholder="0"></label>
-               <label>Последнее сохраненное <input type="text" id="last_score_fld" name="last_score" placeholder="0"></label>
-               <a onclick="calculate()" class="tickets-count-btn">Принять</a>
             </div>
          </li>
          <li class="bank_list-item">
@@ -59,10 +50,7 @@
             <div class="bank_list-item-inner">
                <span class="item_desc">Каждые 100 дней в теме <a href="https://kingscross.f-rpg.me/viewtopic.php?id=84">топов</a></span><span class="item_cost">10 билетов</span>
             </div>
-            <div class="bank_list-count-form">
-               <label><input type="text" id="current_score_fld" name="current_score" placeholder="0"></label>
-               <label>Последнее сохраненное <input type="text" id="last_score_fld" name="last_score" placeholder="0"></label>
-            </div>
+
          </li>
          <li class="bank_list-item">
             <div class="bank_list-item-inner">
@@ -90,29 +78,16 @@
                <span class="bank_tooltip"><i class="html_icons question-icon"></i><em>По 1 билету каждому участнику</em></span></span>
                <span class="item_cost">1 билет</span>
             </div>
-            <div class="bank_list-count-form">
-               <label><input type="text" id="current_score_fld" name="current_score" placeholder="0"></label>
-               <label>Последнее сохраненное <input type="text" id="last_score_fld" name="last_score" placeholder="0"></label>
-            </div>
          </li>
          <li class="bank_list-item">
             <div class="bank_list-item-inner">
                <span class="item_desc">Открытый эпизод с вашим нужным персонажем</span><span class="item_cost">2 билета</span>
-            </div>
-            <div class="bank_list-count-form">
-               <label><input type="text" id="current_score_fld" name="current_score" placeholder="0"></label>
-               <label>Последнее сохраненное <input type="text" id="last_score_fld" name="last_score" placeholder="0"></label>
             </div>
          </li>
          <li class="bank_list-item">
             <div class="bank_list-item-inner">
                <span class="item_desc">Завершенный эпизод 
                <span class="bank_tooltip"><i class="html_icons question-icon"></i><em>По 2 билета каждому участнику</em></span></span><span class="item_cost">3 билета</span>
-            </div>
-            <div class="bank_list-count-form">
-               <label><input type="text" id="current_score_fld" name="current_score" placeholder="0"></label>
-               <label>Последнее сохраненное <input type="text" id="last_score_fld" name="last_score" placeholder="0"></label>
-
             </div>
          </li>
       </ul>
@@ -185,7 +160,6 @@
 <script src="js/Default.js"></script>
 <script src="js/PostCount.js"></script>
 <script>
-   var UserLogin = 'Raphael';
    let bank = new Bank({
       Default: new Default(),
       PostCount: new PostCount()

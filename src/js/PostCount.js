@@ -28,12 +28,13 @@ class PostCount {
         }
 
         this.subforums = [10, 11, 9, 19, 20];
+        //this.subforums = [1];
     }
 
     async setMarkup() {
         let button_placeholder = document.getElementById('post-count-button-placeholder')
         if (button_placeholder) {
-            button_placeholder.innerHTML = '<a onclick="bank.modules[\'PostCount\'].calculate()" class="tickets-count-btn">Принять</a>';
+            button_placeholder.innerHTML = '<a onclick="bank.modules[\'PostCount\'].calculate()" class="tickets-count-btn">Посчитать</a>';
         }
 
         let previous = document.getElementById('post-count-previous')
@@ -49,21 +50,10 @@ class PostCount {
     }
 
     async calculate() {
-        // bank.modules['Default'].list.positive['PostCount-1'] = {
-        //     text: 'Post 1',
-        //     price_string: '1 билет',
-        //     price: 1
-        // }
-        // bank.modules['Default'].list.positive['PostCount-2'] = {
-        //     text: 'Post 2',
-        //     price_string: '2 билета',
-        //     price: 2
-        // }
-
         let posts = await this.get_posts(this.username, this.previous_date)
         posts.forEach((post, index) => {
             bank.modules['Default'].list.positive['PostCount-'+index] = {
-                text: "пост " + post['number'] + ' символов [[url=' + post['href'] + ']' + post['topic_title'] + '[/url]]',
+                text: "пост " + post['number'] + ' симв. [[url=' + post['href'] + ']' + post['topic_title'] + '[/url]]',
                 price_string: post['price'] + ' ' + post['currency'],
                 price:  post['price']
             }
@@ -115,7 +105,7 @@ class PostCount {
     }
 
     async get_topic_start_post(topic_id) {
-        const url = 'https://kingscross.f-rpg.me/api.php?method=topic.get&topic_id=' + topic_id + '&fields=init_post'
+        const url = '/api.php?method=topic.get&topic_id=' + topic_id + '&fields=init_post'
         const response = await fetch(url)
         const j = await response.json()
         return parseInt(j['response'][0]['init_id'])
@@ -185,7 +175,7 @@ class PostCount {
             for (let n = 1; n <= last_page; n++) {
                 if (stop) break
 
-                const url = 'https://kingscross.f-rpg.me/search.php?action=search&keywords=&author=' + this.username + '&forum=' + subforum + '&search_in=0&sort_dir=DESC&show_as=posts&topics=&p=' + n
+                const url = '/search.php?action=search&keywords=&author=' + this.username + '&forum=' + subforum + '&search_in=0&sort_dir=DESC&show_as=posts&topics=&p=' + n
                 const html = await this.fetch_decoded(url)
                 const htmlDoc = parser.parseFromString(html, 'text/html')
 
@@ -209,7 +199,7 @@ class PostCount {
                     if (post_id !== topics[topic_id]) {
 
                         const text = post.querySelector('div.post-content').textContent
-                        const data = this.calculate_currency(text, currency_dict)
+                        const data = this.calculate_currency(text, this.currency_dict)
 
                         posts.push({
                             'topic_id': topic_id,

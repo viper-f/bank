@@ -16,10 +16,15 @@ callApi = function (method, parameters = false)
 
 saveStorageState = function ()
 {
+    let state = {
+        PostCount: {
+            previous_date: "2024-05-10 12:00:00"
+        }
+    }
     return this.callApi('storage.set', {
         token: ForumAPITicket,
         key: "bank",
-        value: "something"
+        value: JSON.stringify(state)
     })
         .then((response) => {
             if (response.status !== 200) {
@@ -42,5 +47,8 @@ callApi('storage.get', {key: "bank"})
         }
         return response.text()})
     .then((text) => {
-        console.log(text)
+        text = JSON.parse(text);
+        console.log(text.response.storage.data.bank);
     })
+
+

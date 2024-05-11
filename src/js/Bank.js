@@ -65,6 +65,9 @@ class Bank
 
     saveStorageState()
     {
+        for (const [module_name, module] of Object.entries(this.modules)) {
+                this.state[module_name] = module.save()
+            }
         return this.callApi('storage.set', {
             token: ForumAPITicket,
             key: "bank",
