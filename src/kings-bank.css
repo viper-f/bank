@@ -154,6 +154,27 @@ i.html_icons {
   width: 100%;
 }
 
+.bank_list-item-inner:hover {
+  cursor: pointer
+}
+
+.bank_list-item:has(.bank_list-item-inner.checked) {
+  filter: brightness(.92);
+}
+
+.bank_list-item-inner.checked:after {
+  content: "";
+  background: var(--accent);
+  mask: url(https://forumstatic.ru/files/001c/16/10/63162.svg) no-repeat center center;
+-webkit-mask: url(https://forumstatic.ru/files/001c/16/10/63162.svg) no-repeat center center;
+  mask-size:contain;
+ -webkit-mask-size: contain;
+  width: 8px;
+  height: 9px;
+  position: absolute;
+  left: 2px
+}
+
 .bank_list-item.remark {
   font-size: 11px;
   display: flex;
