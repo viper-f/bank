@@ -1,6 +1,6 @@
 class PostCount {
     constructor() {
-        this.previous_date = '2001-01-01 00:00:00';
+        this.previous_date = '2024-05-01 00:00:00';
         this.username = UserLogin
         this.currency_dict = {
             "one": "билет",
@@ -48,17 +48,27 @@ class PostCount {
         }
     }
 
-    calculate() {
-        bank.modules['Default'].list['PostCount-1'] = {
-            text: 'Post 1',
-            price_string: '1 билет',
-            price: 1
-        }
-        bank.modules['Default'].list['PostCount-2'] = {
-            text: 'Post 2',
-            price_string: '2 билета',
-            price: 2
-        }
+    async calculate() {
+        // bank.modules['Default'].list.positive['PostCount-1'] = {
+        //     text: 'Post 1',
+        //     price_string: '1 билет',
+        //     price: 1
+        // }
+        // bank.modules['Default'].list.positive['PostCount-2'] = {
+        //     text: 'Post 2',
+        //     price_string: '2 билета',
+        //     price: 2
+        // }
+
+        let posts = await this.get_posts(this.username, this.previous_date)
+        posts.forEach((post, index) => {
+            bank.modules['Default'].list.positive['PostCount-'+index] = {
+                text: "пост " + post['number'] + ' символов [[url=' + post['href'] + ']' + post['topic_title'] + '[/url]]',
+                price_string: post['price'] + ' ' + post['currency'],
+                price:  post['price']
+            }
+        })
+
         //  console.log(bank.modules['Default'].list)
         bank.modules['Default'].setMessageText()
     }
@@ -105,7 +115,7 @@ class PostCount {
     }
 
     async get_topic_start_post(topic_id) {
-        const url = '/api.php?method=topic.get&topic_id=' + topic_id + '&fields=init_post'
+        const url = 'https://kingscross.f-rpg.me/api.php?method=topic.get&topic_id=' + topic_id + '&fields=init_post'
         const response = await fetch(url)
         const j = await response.json()
         return parseInt(j['response'][0]['init_id'])
@@ -175,7 +185,7 @@ class PostCount {
             for (let n = 1; n <= last_page; n++) {
                 if (stop) break
 
-                const url = '/search.php?action=search&keywords=&author=' + this.username + '&forum=' + subforum + '&search_in=0&sort_dir=DESC&show_as=posts&topics=&p=' + n
+                const url = 'https://kingscross.f-rpg.me/search.php?action=search&keywords=&author=' + this.username + '&forum=' + subforum + '&search_in=0&sort_dir=DESC&show_as=posts&topics=&p=' + n
                 const html = await this.fetch_decoded(url)
                 const htmlDoc = parser.parseFromString(html, 'text/html')
 
