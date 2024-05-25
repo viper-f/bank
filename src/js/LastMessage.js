@@ -8,7 +8,9 @@ class LastMessage
     async setMarkup() {
         let button_placeholder = document.getElementById('last-message-placeholder')
         if (button_placeholder) {
+            if (this.lastMessageHref == null) {
             await this.getMessageHref(this.username)
+                }
             if (this.lastMessageHref !== null) {
                 button_placeholder.innerHTML = '<a id="last-message-link" href="' + this.lastMessageHref + '">Последний пост в банке</a>';
             }
@@ -16,8 +18,8 @@ class LastMessage
     }
 
     load(storage_state) {
-        if (storage_state['last_massage_id']) {
-            this.previous_date = storage_state['last_massage_id']
+        if (storage_state['lastMessageHref']) {
+            this.lastMessageHref = storage_state['lastMessageHref']
         }
     }
 
@@ -81,7 +83,7 @@ class LastMessage
 
     save() {
         return {
-            last_massage_id: this.last_massage_id
+            lastMessageHref: this.lastMessageHref
         }
     }
 
