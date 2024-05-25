@@ -2,17 +2,24 @@ class LastMessage
 {
     constructor() {
         this.lastMessageHref = null;
-        this.username = UserLogin
+        this.username = UserLogin;
+        this.mode = "clear"
     }
 
     async setMarkup() {
         let button_placeholder = document.getElementById('last-message-placeholder')
+        let save = false
         if (button_placeholder) {
             if (this.lastMessageHref == null) {
             await this.getMessageHref(this.username)
+                save = true
                 }
             if (this.lastMessageHref !== null) {
                 button_placeholder.innerHTML = '<a id="last-message-link" href="' + this.lastMessageHref + '">Последний пост в банке</a>';
+                if (save) {
+                    this.mode = "save"
+                    bank.saveStorageState()
+                }
             }
         }
     }
@@ -47,10 +54,15 @@ class LastMessage
 
         links.forEach(function (link) {
             const t = link.textContent
-            if (this.isNumeric(t) && parseInt(t) > last_page)
+            if (LastMessage.isNumeric(t) && parseInt(t) > last_page)
                 last_page = parseInt(t)
         })
         return last_page
+    }
+
+    static isNumeric(str) {
+        if (typeof str != "string") return false
+        return !isNaN(str) && !isNaN(parseFloat(str))
     }
 
     async getMessageHref(user_name) {
@@ -61,7 +73,7 @@ class LastMessage
 
             for (let n = 1; n <= last_page; n++) {
 
-                const url = '/search.php?action=search&keywords=&author=' + this.username + '&forum=' + subforum + '&search_in=0&sort_dir=DESC&show_as=posts&topics=&p=' + n
+                const url = '/search.php?action=search&keywords=&author=' + this.username + '&forum=7&search_in=0&sort_dir=DESC&show_as=posts&topics=&p=' + n
                 const html = await this.fetch_decoded(url)
                 const htmlDoc = parser.parseFromString(html, 'text/html')
 
@@ -82,8 +94,12 @@ class LastMessage
 
 
     save() {
-        return {
-            lastMessageHref: this.lastMessageHref
+        if (this.mode === "clear") {
+            return this.lastMessageHref = null
+        } else {
+            return {
+                lastMessageHref: this.lastMessageHref
+            }
         }
     }
 

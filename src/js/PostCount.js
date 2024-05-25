@@ -1,6 +1,7 @@
 class PostCount {
     constructor() {
         this.previous_date = '2024-05-01 00:00:00';
+        this.parent_block = false
         this.username = UserLogin
         this.currency_dict = {
             "one": "билет",
@@ -28,7 +29,7 @@ class PostCount {
         }
 
         this.subforums = [10, 11, 9, 19, 20];
-        //this.subforums = [1];
+        //  this.subforums = [1];
     }
 
     async setMarkup() {
@@ -41,6 +42,7 @@ class PostCount {
         if (previous) {
             previous.value = this.previous_date
         }
+        this.parent_block = button_placeholder.closest('.bank_list-count-form')
     }
 
     load(storage_state) {
@@ -60,7 +62,13 @@ class PostCount {
         })
 
         //  console.log(bank.modules['Default'].list)
+        let t = (new Date()).toISOString().split('.')[0]
+        t = t.replace('T', ' ')
+        this.previous_date = t
         bank.modules['Default'].setMessageText()
+        document.getElementById('post-count-previous').value = this.previous_date
+        this.parent_block.classList.add("checked")
+
     }
 
     save() {
@@ -93,7 +101,7 @@ class PostCount {
 
         links.forEach(function (link) {
             const t = link.textContent
-            if (this.isNumeric(t) && parseInt(t) > last_page)
+            if (bank.modules['PostCount'].isNumeric(t) && parseInt(t) > last_page)
                 last_page = parseInt(t)
         })
         return last_page
