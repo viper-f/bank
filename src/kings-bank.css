@@ -24,6 +24,7 @@
   color: var(--text1);
   font: 400 12px/100% var(--font);
   text-align: left;
+  flex-wrap: wrap;
 }
 
 .html_section {
@@ -239,4 +240,25 @@ i.html_icons {
 .tickets-count-btn:hover {
   background: var(--border);
 	color: var(--link) !important;
+}
+
+.bank-lastmess-form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
+  color: var(--text2);
+  font-size: 10px;
+  font-style: italic;
+  width: 100%;
+}
+
+.bank-lastmess-form label {
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+  box-sizing: border-box;
+  white-space: nowrap;
+  width: 100%;
 }
