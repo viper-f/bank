@@ -1,7 +1,7 @@
 class LastMessage
 {
     constructor() {
-        this.lastMessageHref = null;
+        this.lastMessageHref = 0;
         this.username = UserLogin;
         this.mode = "clear"
     }
@@ -10,11 +10,11 @@ class LastMessage
         let button_placeholder = document.getElementById('last-message-placeholder')
         let save = false
         if (button_placeholder) {
-            if (this.lastMessageHref == null) {
+            if (this.lastMessageHref === 0) {
             await this.getMessageHref(this.username)
                 save = true
-                }
-            if (this.lastMessageHref !== null) {
+            }
+            if (this.lastMessageHref !== 0) {
                 button_placeholder.innerHTML = '<a id="last-message-link" href="' + this.lastMessageHref + '">Последний пост в банке</a>';
                 if (save) {
                     this.mode = "save"
@@ -95,7 +95,7 @@ class LastMessage
 
     save() {
         if (this.mode === "clear") {
-            return this.lastMessageHref = null
+            return this.lastMessageHref = 0
         } else {
             return {
                 lastMessageHref: this.lastMessageHref

@@ -18,14 +18,18 @@ class Bank
             p = p.join('&')
         }
 
-        return fetch('https://frpgtools.com/storage/get?' + p).then((value) => {
+        // return fetch('https://frpgtools.com/storage/get?' + p).then((value) => {
+        //     return value
+        // })
+
+        return fetch('http://127.0.0.1:8000/storage/get?' + p).then((value) => {
             return value
         })
     }
 
     callApiPost(body)
     {
-        return fetch('https://frpgtools.com/storage/post', {
+        return fetch('http://127.0.0.1:8000/storage/put', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json, text/plain, */*',
@@ -50,7 +54,7 @@ class Bank
                 if (text.error) {
                     this.state = {}
                 } else {
-                    this.state = text.response.bank;
+                    this.state = text.bank;
                 }
             for (const [module_name, module] of Object.entries(this.modules)) {
                 if(!this.state[module_name]) {
