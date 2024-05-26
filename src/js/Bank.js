@@ -3,10 +3,11 @@ class Bank
     constructor(modules) {
         this.modules = modules
         this.state = {}
-
+        this.userId = UserID
+        this.boardId = BoardID
     }
 
-    callApi(method, parameters = false)
+    callApiGet(parameters = false)
     {
         let p = ''
         if (parameters) {
@@ -17,14 +18,28 @@ class Bank
             p = p.join('&')
         }
 
-        return fetch('/api.php?method='+method + '&' + p).then((value) => {
+        return fetch('https://frpgtools.com/storage/get?' + p).then((value) => {
+            return value
+        })
+    }
+
+    callApiPost(body)
+    {
+        return fetch('https://frpgtools.com/storage/post', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+            body: body
+        }).then((value) => {
             return value
         })
     }
 
     loadStorageState()
     {
-        return this.callApi('storage.get', {key: "bank"})
+        return this.callApiGet({key: "bank", user_id: this.userId, board_id: this.boardId})
             .then((response) => {
                 if (response.status !== 200) {
                     this.state = {}
@@ -35,7 +50,7 @@ class Bank
                 if (text.error) {
                     this.state = {}
                 } else {
-                    this.state = text.response.storage.data.bank;
+                    this.state = text.response.bank;
                 }
             for (const [module_name, module] of Object.entries(this.modules)) {
                 if(!this.state[module_name]) {
@@ -68,11 +83,13 @@ class Bank
         for (const [module_name, module] of Object.entries(this.modules)) {
                 this.state[module_name] = module.save()
             }
-        return this.callApi('storage.set', {
-            token: ForumAPITicket,
+        return this.callApiPost(JSON.stringify({
+            user_id: this.userId,
+            board_id: this.boardId,
             key: "bank",
-            value: JSON.stringify(this.state)
-        })
+            type: "json",
+            value: this.state
+        }))
             .then((response) => {
                 if (response.status !== 200) {
                    console.log('State was not saved')
